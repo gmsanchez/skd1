@@ -1,0 +1,9 @@
+<library path="skd_base">
+  <class name="skd_base/SKDHardware"
+         type="skd_base::SKDHardware"
+         base_class_type="hardware_interface::SystemInterface">
+    <description>
+      The ros2_control SKDHardware using a system hardware interface-type.
+    </description>
+  </class>
+</library>
