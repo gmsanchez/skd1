@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://ros.org/wiki/xacro" name="SKD-1" >
+
+    <!-- is_sim is true if we launch a Gazebo simulation
+    and false if we are on real hardware -->
+    <xacro:arg name="is_sim" default="true"/>
+
+    <xacro:include filename="$(find skd1_description)/urdf/skd1_core.urdf.xacro" />
+
+    <!-- Gazebo simulation  -->
+    <xacro:if value="$(arg is_sim)">
+        <!-- Use ros2_control -->
+        <xacro:include filename="$(find skd1_description)/urdf/skd1_sim_ros2_control.urdf.xacro" />
+        <xacro:include filename="$(find skd1_description)/urdf/skd1_sim_sensors.urdf.xacro" />
+    </xacro:if>
+
+    <!-- Hardware -->
+    <xacro:unless value="$(arg is_sim)">
+            <xacro:include filename="$(find skd1_description)/urdf/ros2_control.urdf.xacro" />
+    </xacro:unless>
+
+</robot>

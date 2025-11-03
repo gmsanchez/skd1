@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="$(find skd1_description)/urdf/inertial_macros.xacro" />
+    <xacro:include filename="$(find skd1_description)/urdf/wheel.urdf.xacro" />
+    
+	<!--  Wheel distance between front and rear -->
+	<xacro:property name="wheel_distance" value="0.25" />
+
+	<!-- Wheel distance between left and right side -->
+	<xacro:property name="wheel_separation" value="0.475" />
+
+	<!-- Wheel properties -->
+	<xacro:property name="wheel_mass" value="0.150" />
+	<xacro:property name="wheel_radius" value="0.06" />
+	<xacro:property name="wheel_width" value="0.06" />
+
+	<!-- Chassis size -->
+	<xacro:property name="chassis_x_size" value="0.45" />
+	<xacro:property name="chassis_y_size" value="0.38" />
+	<xacro:property name="chassis_z_size" value="0.05" />
+
+	<!-- https://docs.ros.org/en/humble/Tutorials/Intermediate/URDF/Adding-Physical-and-Collision-Properties-to-a-URDF-Model.html -->
+
+    <link name="base_link">
+
+		<visual>
+    		<origin xyz="0 0 0" rpy="0 0 0" />
+			<geometry>
+				<box size="${chassis_x_size} ${chassis_y_size} ${chassis_z_size}"/>
+			</geometry>
+			<material name="Red">
+				<color rgba="${255/255} ${0/255} ${0/255} 1.0"/>
+			</material>
+		</visual>
+
+		<collision>
+			<origin xyz="0 0 0"/>
+			<geometry>
+				<box size="${chassis_x_size} ${chassis_y_size} ${chassis_z_size}"/>
+			</geometry>
+		</collision>
+
+		<visual>
+    		<origin xyz="${chassis_x_size/2 + 0.045} 0 ${chassis_z_size/2 + 0.06}" rpy="0 0 0" />
+			<geometry>
+				<box size="0.09 0.17 0.12"/>
+			</geometry>
+			<material name="Green">
+				<color rgba="${0/255} ${255/255} ${0/255} 1.0"/>
+			</material>
+		</visual>
+
+		<collision>
+			<origin xyz="${chassis_x_size/2 + 0.045} 0 ${chassis_z_size/2 + 0.06}" rpy="0 0 0" />
+			<geometry>
+				<box size="0.09 0.17 0.12"/>
+			</geometry>
+		</collision>
+
+    </link>
+
+	<!-- Base footprint is on the ground under the robot -->
+    <link name="base_footprint">
+		<xacro:dummy_inertial />
+	</link>
+
+    <joint name="base_footprint_joint" type="fixed">
+        <origin xyz="0 0 ${-wheel_radius}" rpy="0 0 0" />
+        <parent link="base_link" />
+        <child link="base_footprint" />
+    </joint>
+
+	<!-- Interial link stores the robot's inertial information -->
+    <link name="inertial_link">
+		<xacro:inertial_box mass="2.0" x="${chassis_x_size}" y="${chassis_y_size}" z="${chassis_z_size}">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_box>
+    </link>
+
+    <joint name="inertial_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <parent link="base_link" />
+        <child link="inertial_link" />
+    </joint>
+
+	<!-- Wheel macros -->
+	<xacro:skd1_wheel wheel_prefix="front_left">
+		<origin xyz="${wheel_distance/2} ${wheel_separation/2} 0" rpy="0 0 0" />
+	</xacro:skd1_wheel>
+
+	<xacro:skd1_wheel wheel_prefix="front_right">
+		<origin xyz="${wheel_distance/2} ${-wheel_separation/2} 0" rpy="0 0 0" />
+	</xacro:skd1_wheel>
+
+	<xacro:skd1_wheel wheel_prefix="rear_left">
+		<origin xyz="${-wheel_distance/2} ${wheel_separation/2} 0" rpy="0 0 0" />
+	</xacro:skd1_wheel>
+
+	<xacro:skd1_wheel wheel_prefix="rear_right">
+		<origin xyz="${-wheel_distance/2} ${-wheel_separation/2} 0" rpy="0 0 0" />
+	</xacro:skd1_wheel>
+
+    <!-- Sensors -->
+
+	<!-- MTI630 IMU -->
+	<link name="xsens_imu_link">
+		<xacro:dummy_inertial />
+	</link>
+
+	<joint name="xsens_imu_joint" type="fixed">
+		<parent link="base_link" />
+		<child link="xsens_imu_link" />
+		<origin xyz="0 0 0.05" rpy="0 0 0" />
+	</joint>
+
+	<!-- RPLidar S3 -->
+	<link name="rplidar_s3_link">
+		<xacro:dummy_inertial />
+		<collision>
+			<origin xyz="0 0 0" rpy="0 0 0"/>
+			<geometry>
+				<box size="0.06 0.056 0.042"/>
+			</geometry>
+		</collision>
+		<visual>
+			<origin xyz="0 0 0" rpy="${pi/2} 0 ${-pi/2}"/>
+			<geometry>
+				<mesh filename="file://$(find skd1_description)/meshes/rplidar_s3.stl"  scale="0.001 0.001 0.001"/>
+			</geometry>
+		</visual>
+	</link>
+
+	<joint name="rplidar_joint" type="fixed">
+		<parent link="base_link"/>
+		<child link="rplidar_s3_link"/>
+		<origin xyz="0.0 0.0 ${chassis_z_size/2 + 0.16}" rpy="0 0 ${pi}"/>
+	</joint>
+
+	<link name="ardusimple_gps_link">
+		<xacro:dummy_inertial />
+	</link>
+
+	<joint name="ardusimple_gps_joint" type="fixed">
+		<parent link="base_link" />
+		<child link="ardusimple_gps_link" />
+		<origin xyz="0.0 -0.1 0.2" rpy="0 0 0" />
+	</joint>
+
+	<link name="m8n_gps_link">
+		<xacro:dummy_inertial />
+	</link>
+
+	<joint name="m8n_gps_joint" type="fixed">
+		<parent link="base_link" />
+		<child link="m8n_gps_link" />
+		<origin xyz="0.0 0.1 0.2" rpy="0 0 0" />
+	</joint>
+
+	
+</robot>

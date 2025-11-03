@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<ros2_control name="GazeboSystem" type="system">
+		<hardware>
+            <plugin>gz_ros2_control/GazeboSimSystem</plugin>
+		</hardware>
+
+		<joint name="front_left_wheel_joint">
+			<command_interface name="velocity" />
+			<state_interface name="position" />
+			<state_interface name="velocity" />
+		</joint>
+		<joint name="front_right_wheel_joint">
+			<command_interface name="velocity" />
+			<state_interface name="position" />
+			<state_interface name="velocity" />
+		</joint>
+        <joint name="rear_left_wheel_joint">
+			<command_interface name="velocity" />
+			<state_interface name="position" />
+			<state_interface name="velocity" />
+		</joint>
+		<joint name="rear_right_wheel_joint">
+			<command_interface name="velocity" />
+			<state_interface name="position" />
+			<state_interface name="velocity" />
+		</joint>
+
+	</ros2_control>
+
+	<gazebo>
+		<plugin filename="gz_ros2_control-system" name="gz_ros2_control::GazeboSimROS2ControlPlugin">
+			<parameters>$(find skd1_control)/config/diff_drive_controller.yaml</parameters>
+		</plugin>
+	</gazebo>
+
+</robot>

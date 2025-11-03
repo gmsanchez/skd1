@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <ros2_control name="SKDHardware" type="system">
+        <hardware>
+            <plugin>skd_base/SKDHardware</plugin>
+            <param name="serial_port">/dev/ttyBPILL</param>
+            <param name="baud_rate">115200</param>
+            <param name="flow_control">none</param>
+            <param name="parity">none</param>
+            <param name="stop_bits">1</param>
+            <param name="update_rate">20</param>
+            
+            <!--
+            <param name="hw_start_duration_sec">2.0</param>
+            <param name="hw_stop_duration_sec">3.0</param>
+            <param name="wheel_diameter">0.3302</param>
+            <param name="max_accel">5.0</param>
+            <param name="max_speed">1.0</param>
+            <param name="polling_timeout">10.0</param>
+            -->
+        </hardware>
+
+        <joint name="front_left_wheel_joint">
+            <command_interface name="velocity" />
+            <state_interface name="position">
+                <param name="initial_value">0.0</param>
+            </state_interface>
+            <state_interface name="velocity">
+                <param name="initial_value">0.0</param>
+            </state_interface>
+            <!-- <param name="PID_gains">0.0 0.0 0.0</param> -->
+        </joint>
+        <joint name="front_right_wheel_joint">
+            <command_interface name="velocity" />
+            <state_interface name="position">
+                <param name="initial_value">0.0</param>
+            </state_interface>
+            <state_interface name="velocity">
+                <param name="initial_value">0.0</param>
+            </state_interface>
+            <!-- <param name="PID_gains">0.0 0.0 0.0</param> -->
+        </joint>
+        <joint name="rear_left_wheel_joint">
+            <command_interface name="velocity" />
+            <state_interface name="position">
+                <param name="initial_value">0.0</param>
+            </state_interface>
+            <state_interface name="velocity">
+                <param name="initial_value">0.0</param>
+            </state_interface>
+            <!-- <param name="PID_gains">0.0 0.0 0.0</param> -->
+        </joint>
+        <joint name="rear_right_wheel_joint">
+            <command_interface name="velocity" />
+            <state_interface name="position">
+                <param name="initial_value">0.0</param>
+            </state_interface>
+            <state_interface name="velocity">
+                <param name="initial_value">0.0</param>
+            </state_interface>
+            <!-- <param name="PID_gains">0.0 0.0 0.0</param> -->
+        </joint>
+    </ros2_control>
+
+</robot>

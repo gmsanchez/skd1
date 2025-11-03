@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
+    <xacro:macro name="skd1_wheel" params="wheel_prefix *joint_pose">
+        <xacro:property name="link_name" value="${wheel_prefix}_wheel_link" />
+        <xacro:property name="joint_name" value="${wheel_prefix}_wheel_joint" />
+        <xacro:property name="transmission_name" value="${wheel_prefix}_wheel_trans" />
+        <xacro:property name="actuator_name" value="${wheel_prefix}_wheel_actuator" />
+
+        <link name="${link_name}">
+            <visual>
+                <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+                <geometry>
+                    <xacro:if value="${wheel_prefix == 'front_left'}">
+                        <mesh filename="file://$(find skd1_description)/meshes/tires-dagu-120mm-l.stl"/>
+                    </xacro:if>
+                    <xacro:if value="${wheel_prefix == 'front_right'}">
+                        <mesh filename="file://$(find skd1_description)/meshes/tires-dagu-120mm-r.stl"/>
+                    </xacro:if>
+                    <xacro:if value="${wheel_prefix == 'rear_left'}">
+                        <mesh filename="file://$(find skd1_description)/meshes/tires-dagu-120mm-l.stl"/>
+                    </xacro:if>
+                    <xacro:if value="${wheel_prefix == 'rear_right'}">
+                        <mesh filename="file://$(find skd1_description)/meshes/tires-dagu-120mm-r.stl"/>
+                    </xacro:if>
+                </geometry>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+                <geometry>
+                    <!-- <cylinder radius="${wheel_radius}" length="${wheel_width}"/> -->
+                    <sphere radius="${wheel_radius}"/>
+                </geometry>
+            </collision>
+            <xacro:inertial_cylinder mass="${wheel_mass}" length="${wheel_width}" radius="${wheel_radius}">
+                <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+            </xacro:inertial_cylinder>
+
+            <!-- <xacro:inertial_sphere mass="0.150" radius="${wheel_radius}">
+                <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
+            </xacro:inertial_sphere> -->
+        </link>
+
+        <gazebo reference="${link_name}">
+            <visual>
+                <!-- Gazebo does not support Ogre material scripts
+                https://gazebosim.org/api/sim/8/migrationsdf.html#:~:text=Materials
+                https://github.com/gazebosim/gazebo-classic/blob/gazebo11/media/materials/scripts/gazebo.material
+                -->
+                <material>
+                    <ambient>0.175 0.175 0.175 1.0</ambient>
+                    <diffuse>0.175 0.175 0.175 1.0</diffuse>
+                    <specular>0.175 0.175 0.175 1.0</specular>
+                </material>
+            </visual>
+            
+            <!-- <selfCollide>false</selfCollide>
+            <mu1 value="1.0"/>
+            <mu2 value="0.5"/>
+            <kp value="1000000.0" />
+            <kd value="0.1" />
+            <fdir1 value="1 0 0"/> -->
+        </gazebo>
+
+        <joint name="${joint_name}" type="continuous">
+            <parent link="base_link"/>
+            <child link="${link_name}" />
+            <xacro:insert_block name="joint_pose" />
+            <axis xyz="0 1 0" rpy="0 0 0" />
+            <!-- <limit effort="1.5" velocity="5.0" />
+            <dynamics damping="0.001" friction="0.001" /> -->
+        </joint>
+
+        <!-- <transmission name="${transmission_name}">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="${joint_name}">
+            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="${actuator_name}">
+            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+            <mechanicalReduction>1</mechanicalReduction>
+        </actuator>
+        </transmission> -->
+
+    </xacro:macro>
+
+</robot>
