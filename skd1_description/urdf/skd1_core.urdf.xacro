@@ -103,19 +103,19 @@
 
     <!-- Sensors -->
 
-	<!-- MTI630 IMU -->
-	<link name="xsens_imu_link">
+	<!-- Phidgets Spatial IMU -->
+	<link name="phidgets_imu_link">
 		<xacro:dummy_inertial />
 	</link>
 
-	<joint name="xsens_imu_joint" type="fixed">
+	<joint name="phidgets_imu_joint" type="fixed">
 		<parent link="base_link" />
-		<child link="xsens_imu_link" />
+		<child link="phidgets_imu_link" />
 		<origin xyz="0 0 0.05" rpy="0 0 0" />
 	</joint>
 
 	<!-- RPLidar S3 -->
-	<link name="rplidar_s3_link">
+	<link name="rplidar_link">
 		<xacro:dummy_inertial />
 		<collision>
 			<origin xyz="0 0 0" rpy="0 0 0"/>
@@ -133,7 +133,7 @@
 
 	<joint name="rplidar_joint" type="fixed">
 		<parent link="base_link"/>
-		<child link="rplidar_s3_link"/>
+		<child link="rplidar_link"/>
 		<origin xyz="0.0 0.0 ${chassis_z_size/2 + 0.16}" rpy="0 0 ${pi}"/>
 	</joint>
 
