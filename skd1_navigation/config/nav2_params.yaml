@@ -36,7 +36,7 @@ amcl:
     z_max: 0.05
     z_rand: 0.5
     z_short: 0.05
-    scan_topic: scan_filtered
+    scan_topic: scan
 
 bt_navigator:
   ros__parameters:
@@ -70,9 +70,9 @@ controller_server:
     enable_stamped_cmd_vel: True
     controller_frequency: 20.0
     costmap_update_timeout: 0.30
-    min_x_velocity_threshold: 0.001
-    min_y_velocity_threshold: 0.5
-    min_theta_velocity_threshold: 0.001
+    min_x_velocity_threshold: 0.01
+    min_y_velocity_threshold: 0.01
+    min_theta_velocity_threshold: 0.1
     failure_tolerance: 0.3
     progress_checker_plugins: ["progress_checker"]
     goal_checker_plugins: ["general_goal_checker"] # "precise_goal_checker"
@@ -96,95 +96,40 @@ controller_server:
       xy_goal_tolerance: 0.25
       yaw_goal_tolerance: 0.25
     FollowPath:
-      plugin: "nav2_mppi_controller::MPPIController"
-      time_steps: 56
-      model_dt: 0.05
-      batch_size: 2000
-      ax_max: 3.0
-      ax_min: -3.0
-      ay_max: 3.0
-      ay_min: -3.0
-      az_max: 3.5
-      vx_std: 0.2
-      vy_std: 0.2
-      wz_std: 0.4
-      vx_max: 0.5
-      vx_min: -0.35
-      vy_max: 0.5
-      wz_max: 1.9
-      iteration_count: 1
-      prune_distance: 1.7
-      transform_tolerance: 0.1
-      temperature: 0.3
-      gamma: 0.015
-      motion_model: "DiffDrive"
-      visualize: true
-      regenerate_noises: true
-      TrajectoryVisualizer:
-        trajectory_step: 5
-        time_step: 3
-      AckermannConstraints:
-        min_turning_r: 0.2
-      critics: [
-        "ConstraintCritic", "CostCritic", "GoalCritic",
-        "GoalAngleCritic", "PathAlignCritic", "PathFollowCritic",
-        "PathAngleCritic", "PreferForwardCritic"]
-      ConstraintCritic:
-        enabled: true
-        cost_power: 1
-        cost_weight: 4.0
-      GoalCritic:
-        enabled: true
-        cost_power: 1
-        cost_weight: 5.0
-        threshold_to_consider: 1.4
-      GoalAngleCritic:
-        enabled: true
-        cost_power: 1
-        cost_weight: 3.0
-        threshold_to_consider: 0.5
-      PreferForwardCritic:
-        enabled: true
-        cost_power: 1
-        cost_weight: 5.0
-        threshold_to_consider: 0.5
-      CostCritic:
-        enabled: true
-        cost_power: 1
-        cost_weight: 3.81
-        near_collision_cost: 253
-        critical_cost: 300.0
-        consider_footprint: false
-        collision_cost: 1000000.0
-        near_goal_distance: 1.0
-        trajectory_point_step: 2
-      PathAlignCritic:
-        enabled: true
-        cost_power: 1
-        cost_weight: 14.0
-        max_path_occupancy_ratio: 0.05
-        trajectory_point_step: 4
-        threshold_to_consider: 0.5
-        offset_from_furthest: 20
-        use_path_orientations: false
-      PathFollowCritic:
-        enabled: true
-        cost_power: 1
-        cost_weight: 5.0
-        offset_from_furthest: 5
-        threshold_to_consider: 1.4
-      PathAngleCritic:
-        enabled: true
-        cost_power: 1
-        cost_weight: 2.0
-        offset_from_furthest: 4
-        threshold_to_consider: 0.5
-        max_angle_to_furthest: 1.0
-        mode: 0
-      # TwirlingCritic:
-      #   enabled: true
-      #   twirling_cost_power: 1
-      #   twirling_cost_weight: 10.0
+        plugin: "nav2_regulated_pure_pursuit_controller::RegulatedPurePursuitController"
+        max_linear_vel: 0.5
+        min_linear_vel: -0.5
+        max_angular_vel: 2.5
+        min_angular_vel: -2.5
+        max_linear_accel: 2.5
+        max_linear_decel: -2.5
+        max_angular_accel: 3.2
+        max_angular_decel: -3.2
+        lookahead_dist: 0.6
+        min_lookahead_dist: 0.3
+        max_lookahead_dist: 0.9
+        lookahead_time: 1.5
+        rotate_to_heading_angular_vel: 1.8
+        use_velocity_scaled_lookahead_dist: false
+        min_approach_linear_velocity: 0.05
+        approach_velocity_scaling_dist: 0.6
+        use_collision_detection: true
+        max_allowed_time_to_collision_up_to_carrot: 1.0
+        use_regulated_linear_velocity_scaling: true
+        use_fixed_curvature_lookahead: false
+        curvature_lookahead_dist: 0.25
+        use_cost_regulated_linear_velocity_scaling: false
+        cost_scaling_dist: 0.3
+        cost_scaling_gain: 1.0
+        regulated_linear_scaling_min_radius: 0.9
+        regulated_linear_scaling_min_speed: 0.25
+        use_rotate_to_heading: true
+        allow_reversing: false
+        rotate_to_heading_min_angle: 0.785
+        min_distance_to_obstacle: 0.0
+        stateful: true
+        use_dynamic_window: false
+        allow_obstacle_checking_beyond_goal: false
 
 local_costmap:
   local_costmap:
@@ -194,15 +139,17 @@ local_costmap:
       global_frame: odom
       robot_base_frame: base_link
       rolling_window: true
-      width: 3
-      height: 3
+      width: 5
+      height: 5
       resolution: 0.05
-      robot_radius: 0.35
+      # robot_radius: 0.35
+      resolution: 0.05
+      footprint: "[ [0.25, 0.20], [0.25, -0.20], [-0.25, -0.20], [-0.25, 0.20] ]"
       plugins: ["voxel_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 3.0
-        inflation_radius: 1.50  # See https://docs.nav2.org/tuning/index.html#inflation-potential-fields
+        cost_scaling_factor: 1.0
+        inflation_radius: 0.4  # See https://docs.nav2.org/tuning/index.html#inflation-potential-fields
       voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: True
@@ -214,15 +161,16 @@ local_costmap:
         mark_threshold: 0
         observation_sources: scan
         scan:
-          topic: /scan_filtered
+          topic: /scan
           max_obstacle_height: 2.0
           clearing: True
           marking: True
           data_type: "LaserScan"
-          raytrace_max_range: 3.0
-          raytrace_min_range: 0.0
+          raytrace_max_range: 12.0
+          raytrace_min_range: 0.20
           obstacle_max_range: 2.5
-          obstacle_min_range: 0.0
+          obstacle_min_range: 0.20
+          inf_is_valid: true
       static_layer:
         plugin: "nav2_costmap_2d::StaticLayer"
         map_subscribe_transient_local: True
@@ -235,8 +183,9 @@ global_costmap:
       publish_frequency: 1.0
       global_frame: map
       robot_base_frame: base_link
-      robot_radius: 0.35
+      # robot_radius: 0.35
       resolution: 0.05
+      footprint: "[ [0.25, 0.20], [0.25, -0.20], [-0.25, -0.20], [-0.25, 0.20] ]"
       track_unknown_space: true
       plugins: ["static_layer", "obstacle_layer", "inflation_layer"]
       obstacle_layer:
@@ -244,22 +193,23 @@ global_costmap:
         enabled: True
         observation_sources: scan
         scan:
-          topic: /scan_filtered
+          topic: /scan
           max_obstacle_height: 2.0
           clearing: True
           marking: True
           data_type: "LaserScan"
-          raytrace_max_range: 3.0
-          raytrace_min_range: 0.0
+          raytrace_max_range: 12.0
+          raytrace_min_range: 0.3
           obstacle_max_range: 2.5
-          obstacle_min_range: 0.0
+          obstacle_min_range: 0.3
+          inf_is_valid: true
       static_layer:
         plugin: "nav2_costmap_2d::StaticLayer"
         map_subscribe_transient_local: True
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 3.0
-        inflation_radius: 1.5  # See https://docs.nav2.org/tuning/index.html#inflation-potential-fields
+        cost_scaling_factor: 1.0
+        inflation_radius: 0.4  # See https://docs.nav2.org/tuning/index.html#inflation-potential-fields
       always_send_full_costmap: True
 
 # The yaml_filename does not need to be specified since it going to be set by defaults in launch.
@@ -285,8 +235,8 @@ planner_server:
     GridBased:
       plugin: "nav2_navfn_planner::NavfnPlanner"
       tolerance: 0.5
-      use_astar: false
-      allow_unknown: true
+      use_astar: true
+      allow_unknown: false
 
 smoother_server:
   ros__parameters:
@@ -367,13 +317,13 @@ velocity_smoother:
     smoothing_frequency: 20.0
     scale_velocities: False
     feedback: "OPEN_LOOP"
-    max_velocity: [0.5, 0.0, 2.0]
-    min_velocity: [-0.5, 0.0, -2.0]
-    max_accel: [2.5, 0.0, 3.2]
-    max_decel: [-2.5, 0.0, -3.2]
+    max_velocity: [1.50, 0.0, 3.5]
+    min_velocity: [-1.50, 0.0, -3.5]
+    max_accel: [1.5, 0.0, 1.2]
+    max_decel: [-1.5, 0.0, -1.2]
     odom_topic: "odometry/filtered"
     odom_duration: 0.1
-    deadband_velocity: [0.0, 0.0, 0.0]
+    deadband_velocity: [0.1, 0.0, 0.2]
     velocity_timeout: 1.0
 
 collision_monitor:
@@ -403,7 +353,7 @@ collision_monitor:
     observation_sources: ["scan"]
     scan:
       type: "scan"
-      topic: "scan_filtered"
+      topic: "scan"
       min_height: 0.15
       max_height: 2.0
       enabled: True
