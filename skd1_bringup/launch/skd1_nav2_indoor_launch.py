@@ -144,7 +144,7 @@ def generate_launch_description():
         ),
         launch_arguments = {'use_sim_time': use_sim_time,
                             'params_file': nav2_params_file}.items()
-    )
+   )
 
    ld = LaunchDescription(ARGUMENTS)
    ld.add_action(skd1_control_launch)
