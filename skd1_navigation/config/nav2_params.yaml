@@ -78,6 +78,8 @@ controller_server:
     goal_checker_plugins: ["general_goal_checker"] # "precise_goal_checker"
     controller_plugins: ["FollowPath"]
     use_realtime_priority: false
+    odom_topic: "odometry/filtered"
+
 
     # Progress checker parameters
     progress_checker:
