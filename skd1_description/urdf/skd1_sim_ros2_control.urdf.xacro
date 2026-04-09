@@ -35,4 +35,21 @@
 		</plugin>
 	</gazebo>
 
+	<gazebo>
+        <plugin filename="gz-sim-odometry-publisher-system" name="gz::sim::systems::OdometryPublisher">
+			<odom_frame>odom</odom_frame>
+			<robot_base_frame>base_link</robot_base_frame>
+			<odom_publish_frequency>50</odom_publish_frequency>
+			<odom_topic>/ground_truth/odometry</odom_topic>
+			<odom_covariance_topic>/ground_truth/odometry_with_covariance</odom_covariance_topic>
+			<tf_topic>/ground_truth/pose</tf_topic>
+			<dimensions>3</dimensions>
+			<xyz_offset>0 0 0</xyz_offset>
+			<rpy_offset>0 0 0</rpy_offset>
+			<gaussian_noise>0</gaussian_noise>
+        </plugin>
+		<!-- https://gazebosim.org/api/sim/8/classgz_1_1sim_1_1systems_1_1OdometryPublisher.html -->
+    </gazebo>
+
 </robot>
+
