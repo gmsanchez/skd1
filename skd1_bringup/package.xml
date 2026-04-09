@@ -14,7 +14,7 @@
   <depend>skd1_control</depend>
   <depend>skd1_teleop</depend>
   <depend>twist_mux</depend>
-  <depend>twist_joy</depend>
+  <depend>teleop_twist_joy</depend>
 
   <test_depend>ament_lint_auto</test_depend>
   <test_depend>ament_lint_common</test_depend>
