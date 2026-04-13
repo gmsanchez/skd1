@@ -172,7 +172,7 @@
 	<joint name="rplidar_joint" type="fixed">
 		<parent link="base_link"/>
 		<child link="rplidar_link"/>
-		<origin xyz="0.075 0 ${chassis_z_size-0.005+0.005+0.0298}" rpy="0 0 0"/>
+		<origin xyz="0.075 0 ${chassis_z_size-0.005+0.005+0.0298}" rpy="0 0 ${pi}"/>
 	</joint>
 
 	<link name="ardusimple_gps_link">
