@@ -10,19 +10,18 @@ def generate_launch_description():
     use_sim_time = LaunchConfiguration('use_sim_time')
 
     ekf_node = Node(
-            package='robot_localization',
-            executable='ekf_node',
-            name='ekf_filter_node',
-            output='screen',
-            parameters = [
-                {'use_sim_time': use_sim_time},
-                PathJoinSubstitution([FindPackageShare('skd1_localization'), 'config', 'ekf.yaml'])
-            ],
-            remappings=[
-                ("odometry/filtered", "odometry/local"),
-                ("imu/data", "phidgets_373223/imu/data"),
-            ],
-        )
+        package='robot_localization',
+        executable='ekf_node',
+        name='ekf_global_map_filter_node',
+        output='screen',
+        parameters = [
+            {'use_sim_time': use_sim_time},
+            PathJoinSubstitution([FindPackageShare('skd1_localization'), 'config', 'ekf_global_map.yaml'])
+        ],
+        remappings=[
+            ("odometry/filtered", "odometry/global"),
+        ],
+    )
 
     return LaunchDescription([
         DeclareLaunchArgument(
@@ -30,4 +29,4 @@ def generate_launch_description():
             default_value='False',
             description='Use simulation (Gazebo) clock if true'),
         ekf_node,
-    ])
+])

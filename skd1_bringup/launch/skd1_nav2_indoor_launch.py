@@ -88,6 +88,17 @@ def generate_launch_description():
       launch_arguments= {'use_sim_time': use_sim_time}.items(),
    )
 
+   ekf_global_map_launch = IncludeLaunchDescription(
+        PythonLaunchDescriptionSource(
+            PathJoinSubstitution(
+                [FindPackageShare("skd1_localization"),
+                "launch",
+                "ekf_global_map_launch.py"],
+            )
+        ),
+        launch_arguments= {'use_sim_time': use_sim_time}.items(),
+    )
+
    rplidar_c1_launch = IncludeLaunchDescription(
       PythonLaunchDescriptionSource(
          PathJoinSubstitution(
@@ -154,6 +165,7 @@ def generate_launch_description():
    ld.add_action(rplidar_c1_launch)
    ld.add_action(range_filter_laser_filter)
    ld.add_action(ekf_launch)
+   ld.add_action(ekf_global_map_launch)
    ld.add_action(online_async_launch)
    # # ld.add_action(nav2_amcl_localization_launch)
    ld.add_action(nav2_launch)
