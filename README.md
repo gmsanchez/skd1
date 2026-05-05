@@ -8,3 +8,7 @@ This is the main repo, containing the base packages for operation on the robot h
 - [skd1_simulation](https://github.com/gmsanchez/skd1_simulation): Simulation packages for SKD-1 using Gazebo.
 - [skd1_extra](https://github.com/gmsanchez/skd1_extra): Extra packages, containing design files and BoM.
 - [hibachi_firmware](https://github.com/gmsanchez/hibachi_firmware): Firmware for the STM32 Blue Pill low level controller.
+
+![](./SKD-1.png "SKD-1")
+
+A video, containing a playback of a ROS bag file that can be found in the skd1_extra repository can be seen in [https://youtu.be/JbZKzyOHtvs](https://youtu.be/JbZKzyOHtvs)
