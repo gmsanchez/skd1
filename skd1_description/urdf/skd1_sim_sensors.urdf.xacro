@@ -55,7 +55,7 @@
 <gazebo reference="ardusimple_gps_link">
     <sensor name="ardusimple_navsat" type="navsat">
         <always_on>1</always_on>
-        <update_rate>1</update_rate>
+        <update_rate>10</update_rate>
         <topic>ardusimple/fix</topic>
         <gz_frame_id>ardusimple_gps_link</gz_frame_id>
     </sensor>

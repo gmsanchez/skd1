@@ -11,4 +11,12 @@ This is the main repo, containing the base packages for operation on the robot h
 
 ![](./SKD-1.png "SKD-1")
 
+## Wiring schematic
+
+![](./skd1-connection-diagram.png "SKD-1")
+
+A PDF version of the wiring schematic can be found in [skd1-connection-diagram.pdf](./skd1-connection-diagram.pdf)
+
+## Extra
+
 A video, containing a playback of a ROS bag file that can be found in the skd1_extra repository can be seen in [https://youtu.be/JbZKzyOHtvs](https://youtu.be/JbZKzyOHtvs)
