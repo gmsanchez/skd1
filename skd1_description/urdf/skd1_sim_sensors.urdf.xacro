@@ -7,6 +7,7 @@
         <update_rate>20</update_rate>
         <visualize>true</visualize>
         <topic>phidgets_373223/imu/data</topic>
+        <pose relative_to='phidgets_imu_link'>0 0 0 0 0 0</pose>
         <gz_frame_id>phidgets_imu_link</gz_frame_id>
         <!-- <enable_metrics>true</enable_metrics> -->
     </sensor>
