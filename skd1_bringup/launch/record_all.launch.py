@@ -4,7 +4,6 @@ from datetime import datetime
 
 
 def generate_launch_description():
-
     timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
     bag_name = f"rosbag_{timestamp}"
 
@@ -16,7 +15,7 @@ def generate_launch_description():
                 '--storage', 'mcap',
                 '-o', bag_name
             ],
+            additional_env={'ROS_SUPER_CLIENT': 'TRUE'},
             output='screen'
         )
     ])
-    
