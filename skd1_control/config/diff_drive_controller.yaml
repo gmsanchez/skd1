@@ -20,13 +20,13 @@ skd1_base_controller:
     # Kinematic model with ICR coefficient isn't totally accurate and this coefficient can differ
     # for various ground types, but checking on our office floor 1.3 looked approximately alright
     # wheel_separation_multiplier: 1.3
-    wheel_separation_multiplier: 1.0
+    wheel_separation_multiplier: 1.42  #1.0
 
     # left_wheel_radius_multiplier: 1.150
     # right_wheel_radius_multiplier: 1.150
 
-    left_wheel_radius_multiplier: 1.0
-    right_wheel_radius_multiplier: 1.0
+    left_wheel_radius_multiplier: 1.03
+    right_wheel_radius_multiplier: 1.039 #1.038 #1.03
 
 
     # Feedback from motors is published at around 20 Hz
@@ -59,10 +59,10 @@ skd1_base_controller:
       x:
         has_velocity_limits: true
         has_acceleration_limits: true
-        # top speed is around 0.42 m/s
-        max_velocity: 0.35 # m/s
+        # top speed is around 0.85 m/s
+        max_velocity: 0.75 # m/s
         # min_velocity -  When unspecified, -max_velocity is used
-        max_acceleration: 1.0 # m/s^2
+        max_acceleration: 0.75 # m/s^2
         # min_acceleration - When unspecified, -max_acceleration is used.
         max_jerk: NAN # m/s^3
 
@@ -70,9 +70,9 @@ skd1_base_controller:
       z:
         has_velocity_limits: true
         has_acceleration_limits: true
-        # top angular speed is around 1.7684 rad/s
-        max_velocity: 1.7 # rad/s
+        # top angular speed is around 4.5 rad/s
+        max_velocity: 3.14 # rad/s
         # min_velocity -  When unspecified, -max_velocity is used
-        max_acceleration: 3.0 # rad/s^2
+        max_acceleration: 1.57 # rad/s^2
         # min_acceleration - When unspecified, -max_acceleration is used.
         max_jerk: NAN # rad/s^3
