@@ -68,7 +68,7 @@ bt_navigator:
 controller_server:
   ros__parameters:
     enable_stamped_cmd_vel: True
-    controller_frequency: 20.0
+    controller_frequency: 10.0
     costmap_update_timeout: 0.30
     min_x_velocity_threshold: 0.01
     min_y_velocity_threshold: 0.01
@@ -150,8 +150,8 @@ local_costmap:
       plugins: ["voxel_layer", "inflation_layer"]
       inflation_layer:
         plugin: "nav2_costmap_2d::InflationLayer"
-        cost_scaling_factor: 1.0
-        inflation_radius: 0.4  # See https://docs.nav2.org/tuning/index.html#inflation-potential-fields
+        cost_scaling_factor: 0.5 #1.0
+        inflation_radius: 0.8 #0.4  # See https://docs.nav2.org/tuning/index.html#inflation-potential-fields
       voxel_layer:
         plugin: "nav2_costmap_2d::VoxelLayer"
         enabled: True
@@ -186,6 +186,10 @@ global_costmap:
       global_frame: map
       robot_base_frame: base_link
       # robot_radius: 0.35
+      #width: 10
+      #height: 10
+      #origin_x: -5
+      #origin_y: -5
       resolution: 0.05
       footprint: "[ [0.25, 0.20], [0.25, -0.20], [-0.25, -0.20], [-0.25, 0.20] ]"
       track_unknown_space: true
