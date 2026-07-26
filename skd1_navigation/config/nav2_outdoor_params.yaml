@@ -1,6 +1,6 @@
 bt_navigator:
   ros__parameters:
-    use_sim_time: false
+    # use_sim_time: false
     global_frame: map
     robot_base_frame: base_link
     odom_topic: /odometry/global      # or your global EKF output topic
@@ -17,7 +17,7 @@ bt_navigator:
 controller_server:
   ros__parameters:
     enable_stamped_cmd_vel: True
-    use_sim_time: false
+    # use_sim_time: false
     controller_frequency: 10.0
     min_x_velocity_threshold: 0.001
     min_y_velocity_threshold: 0.5
@@ -68,7 +68,7 @@ local_costmap:
       publish_frequency: 2.0
       global_frame: odom
       robot_base_frame: base_link
-      use_sim_time: true
+      # use_sim_time: true
       rolling_window: true
       width: 10
       height: 10
@@ -87,7 +87,7 @@ global_costmap:
       publish_frequency: 1.0
       global_frame: map
       robot_base_frame: base_link
-      use_sim_time: true
+      # use_sim_time: true
       rolling_window: true
       width: 100
       height: 100
@@ -135,7 +135,7 @@ behavior_server:
     global_frame: odom
     robot_base_frame: base_link
     transform_tolerance: 0.5
-    use_sim_time: false
+    # use_sim_time: false
     simulate_ahead_time: 2.0
     max_rotational_vel: 1.0
     min_rotational_vel: 0.4
@@ -143,7 +143,7 @@ behavior_server:
 
 waypoint_follower:
   ros__parameters:
-    use_sim_time: false
+    # use_sim_time: false
     loop_rate: 20
     stop_on_failure: false
     waypoint_task_executor_plugin: "wait_at_waypoint"
