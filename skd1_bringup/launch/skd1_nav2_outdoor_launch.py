@@ -145,15 +145,15 @@ def generate_launch_description():
    #    # launch_arguments= {'use_sim_time': use_sim_time}.items(),
    # )
 
-   # nav2_launch = IncludeLaunchDescription(
-   #      PythonLaunchDescriptionSource(
-   #          PathJoinSubstitution([FindPackageShare('skd1_navigation'),
-   #             'launch',
-   #             'navigation_launch.py']),
-   #      ),
-   #      launch_arguments = {'use_sim_time': use_sim_time,
-   #                          'params_file': nav2_params_file}.items()
-   # )
+   custom_nav2_launch = IncludeLaunchDescription(
+               PythonLaunchDescriptionSource(
+                   PathJoinSubstitution([FindPackageShare('skd1_navigation'),
+                      'launch',
+                      'custom_navigation_launch.py']),
+               ),
+               launch_arguments = {'use_sim_time': use_sim_time,
+                                   'params_file': nav2_params_file}.items()
+   )
    
    f9p_ublox_launch = IncludeLaunchDescription(
            PythonLaunchDescriptionSource([
@@ -181,7 +181,7 @@ def generate_launch_description():
    #      }.items()
    # )
    
-   custom_nav2_launch = IncludeLaunchDescription(
+   nav2_outdoor_launch = IncludeLaunchDescription(
            PythonLaunchDescriptionSource(
                PathJoinSubstitution(
                    [FindPackageShare('skd1_navigation'), 'launch', 'navigation_outdoor_launch.py']

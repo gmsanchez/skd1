@@ -57,7 +57,7 @@ def generate_launch_description():
     )
 
     # ---- Nav2 (stock bringup launch + our GPS/EKF-only params file) ----
-    custom_nav2_launch = IncludeLaunchDescription(
+    nav2_outdoor_launch = IncludeLaunchDescription(
         PythonLaunchDescriptionSource(
             PathJoinSubstitution(
                 [FindPackageShare('skd1_navigation'), 'launch', 'navigation_outdoor_launch.py']
@@ -68,11 +68,21 @@ def generate_launch_description():
             'params_file': nav2_params_file,
         }.items(),
     )
+    
+    custom_nav2_launch = IncludeLaunchDescription(
+            PythonLaunchDescriptionSource(
+                PathJoinSubstitution([FindPackageShare('skd1_navigation'),
+                   'launch',
+                   'custom_navigation_launch.py']),
+            ),
+            launch_arguments = {'use_sim_time': use_sim_time,
+                                'params_file': nav2_params_file}.items()
+    )
 
     ld = LaunchDescription(ARGUMENTS)
     ld.add_action(skd1_gz_launch)
     ld.add_action(teleop_twist_mux_launch)
     ld.add_action(dual_ekf_navsat_launch)
     ld.add_action(custom_nav2_launch)
-
+    # ld.add_action(nav2_outdoor_launch)
     return ld
