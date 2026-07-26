@@ -10,6 +10,60 @@
         <pose relative_to='phidgets_imu_link'>0 0 0 0 0 0</pose>
         <gz_frame_id>phidgets_imu_link</gz_frame_id>
         <!-- <enable_metrics>true</enable_metrics> -->
+        <imu>
+          <angular_velocity>
+            <x>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>2e-4</stddev>
+                <bias_mean>0.0000075</bias_mean>
+                <bias_stddev>0.0000008</bias_stddev>
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>2e-4</stddev>
+                <bias_mean>0.0000075</bias_mean>
+                <bias_stddev>0.0000008</bias_stddev>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>2e-4</stddev>
+                <bias_mean>0.0000075</bias_mean>
+                <bias_stddev>0.0000008</bias_stddev>
+              </noise>
+            </z>
+          </angular_velocity>
+          <linear_acceleration>
+            <x>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1.7e-2</stddev>
+                <bias_mean>0.1</bias_mean>
+                <bias_stddev>0.001</bias_stddev>
+              </noise>
+            </x>
+            <y>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1.7e-2</stddev>
+                <bias_mean>0.1</bias_mean>
+                <bias_stddev>0.001</bias_stddev>
+              </noise>
+            </y>
+            <z>
+              <noise type="gaussian">
+                <mean>0.0</mean>
+                <stddev>1.7e-2</stddev>
+                <bias_mean>0.1</bias_mean>
+                <bias_stddev>0.001</bias_stddev>
+              </noise>
+            </z>
+          </linear_acceleration>
+        </imu>
     </sensor>
 
     <sensor name="phidgets_mag" type="magnetometer">
@@ -54,12 +108,28 @@
 </gazebo>
 
 <gazebo reference="ardusimple_gps_link">
-    <sensor name="ardusimple_navsat" type="navsat">
-        <always_on>1</always_on>
-        <update_rate>10</update_rate>
-        <topic>ardusimple/fix</topic>
-        <gz_frame_id>ardusimple_gps_link</gz_frame_id>
-    </sensor>
+  <sensor name="navsat" type="navsat">
+    <always_on>true</always_on>
+    <update_rate>1</update_rate>
+    <topic>ardusimple/fix</topic>
+    <gz_frame_id>ardusimple_gps_link</gz_frame_id>
+    <navsat>
+      <position_sensing>
+        <horizontal>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>0.0</stddev>
+          </noise>
+        </horizontal>
+        <vertical>
+          <noise type="gaussian">
+            <mean>0.0</mean>
+            <stddev>0.0</stddev>
+          </noise>
+        </vertical>
+      </position_sensing>
+    </navsat>
+  </sensor>
 </gazebo>
 
 </robot>
