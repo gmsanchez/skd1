@@ -12,16 +12,16 @@
                 <origin xyz="0 0 0" rpy="${pi/2} 0 0"/>
                 <geometry>
                     <xacro:if value="${wheel_prefix == 'front_left'}">
-                        <mesh filename="file://$(find skd1_description)/meshes/tires-dagu-120mm-l.stl"/>
+                        <mesh filename="package://skd1_description/meshes/tires-dagu-120mm-l.stl"/>
                     </xacro:if>
                     <xacro:if value="${wheel_prefix == 'front_right'}">
-                        <mesh filename="file://$(find skd1_description)/meshes/tires-dagu-120mm-r.stl"/>
+                        <mesh filename="package://skd1_description/meshes/tires-dagu-120mm-r.stl"/>
                     </xacro:if>
                     <xacro:if value="${wheel_prefix == 'rear_left'}">
-                        <mesh filename="file://$(find skd1_description)/meshes/tires-dagu-120mm-l.stl"/>
+                        <mesh filename="package://skd1_description/meshes/tires-dagu-120mm-l.stl"/>
                     </xacro:if>
                     <xacro:if value="${wheel_prefix == 'rear_right'}">
-                        <mesh filename="file://$(find skd1_description)/meshes/tires-dagu-120mm-r.stl"/>
+                        <mesh filename="package://skd1_description/meshes/tires-dagu-120mm-r.stl"/>
                     </xacro:if>
                 </geometry>
 

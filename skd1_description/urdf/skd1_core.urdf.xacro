@@ -30,7 +30,7 @@
 		<visual>
     		<origin xyz="0 0 0" rpy="${(pi/2)} 0 ${pi}"/>
 			<geometry>
-				<mesh filename="file://$(find skd1_description)/meshes/skd1_chassis.stl" scale="0.001 0.001 0.001" />
+				<mesh filename="package://skd1_description/meshes/skd1_chassis.stl" scale="0.001 0.001 0.001" />
 				<!-- <box size="${chassis_x_size} ${chassis_y_size} ${chassis_z_size}"/> -->
 			</geometry>
 			<material name="White">
@@ -154,7 +154,7 @@
 		<visual>
 			<origin xyz="0 0 -0.0298" rpy="0 0 0"/>
 			<geometry>
-				<mesh filename="file://$(find skd1_description)/meshes/RPLidar_C1M1.stl"  scale="0.001 0.001 0.001"/>
+				<mesh filename="package://skd1_description/meshes/RPLidar_C1M1.stl"  scale="0.001 0.001 0.001"/>
 			</geometry>
 			<material name="Cyan">
 				<color rgba="0.0 1.0 1.0 1.0"/>
@@ -179,7 +179,7 @@
 		<visual>
 			<origin xyz="0 0 0" rpy="0 0 ${pi/2}"/>
 			<geometry>
-				<mesh filename="file://$(find skd1_description)/meshes/uBlox_ANT2B-ANN.stl"  scale="0.001 0.001 0.001"/>
+				<mesh filename="package://skd1_description/meshes/uBlox_ANT2B-ANN.stl"  scale="0.001 0.001 0.001"/>
 			</geometry>
 			<material name="Yellow">
 				<color rgba="1.0 1.0 0.0 1.0"/>
