@@ -19,4 +19,4 @@ A PDF version of the wiring schematic can be found in [skd1-connection-diagram.p
 
 ## Extra
 
-A video, containing a playback of a ROS bag file that can be found in the skd1_extra repository can be seen in [https://youtu.be/JbZKzyOHtvs](https://youtu.be/JbZKzyOHtvs)
+A video, containing a playback of the ROS bag files that can be found in the skd1_extra repository can be seen in [https://youtu.be/Ky_n3-d5krc](https://youtu.be/Ky_n3-d5krc) and [https://youtu.be/exNnlu0ab7w](https://youtu.be/exNnlu0ab7w)
